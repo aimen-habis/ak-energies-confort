@@ -1,0 +1,281 @@
+@import "tailwindcss";
+
+/* ============================================================
+   AK ÉNERGIES CONFORT — Design System "Fire & Frost"
+   ============================================================ */
+
+@theme {
+  /* ---- Fire ---- */
+  --color-flame: #ff4d2e;
+  --color-flame-glow: #ffb347;
+  --color-ember: #c2410c;
+
+  /* ---- Frost ---- */
+  --color-frost: #38bdf8;
+  --color-frost-deep: #0ea5e9;
+  --color-ice: #e0f2fe;
+
+  /* ---- Premium neutrals ---- */
+  --color-void: #0a0a0f;
+  --color-carbon: #18181b;
+  --color-steel: #3f3f46;
+  --color-platinum: #f4f4f5;
+  --color-pure: #ffffff;
+
+  /* ---- Type families ---- */
+  --font-display: "Cabinet Grotesk", "Satoshi", ui-sans-serif, system-ui, sans-serif;
+  --font-sans: "Satoshi", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-jetbrains), ui-monospace, monospace;
+
+  /* ---- Motion ---- */
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-in-out-quint: cubic-bezier(0.83, 0, 0.17, 1);
+
+  /* ---- Fluid display sizes ---- */
+  --text-display: clamp(2.75rem, 9vw, 9rem);
+  --text-section: clamp(2rem, 5.5vw, 4.5rem);
+}
+
+/* Signature gradients used across the site */
+:root {
+  --gradient-signature: linear-gradient(
+    135deg,
+    #ff4d2e 0%,
+    #ffb347 50%,
+    #38bdf8 100%
+  );
+  --gradient-fire: linear-gradient(135deg, #ff4d2e 0%, #ffb347 100%);
+  --gradient-frost: linear-gradient(135deg, #38bdf8 0%, #0ea5e9 100%);
+}
+
+* {
+  border-color: color-mix(in oklab, var(--color-platinum) 12%, transparent);
+}
+
+html {
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  scroll-behavior: auto; /* Lenis owns scrolling */
+  background: var(--color-void);
+}
+
+body {
+  background: var(--color-void);
+  color: var(--color-platinum);
+  font-family: var(--font-sans);
+  font-feature-settings: "ss01", "cv01";
+  overflow-x: clip;
+}
+
+/* When Lenis is active, html locks while the wrapper scrolls */
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+.lenis.lenis-stopped {
+  overflow: clip;
+}
+
+::selection {
+  background: var(--color-flame);
+  color: var(--color-void);
+}
+
+/* ---- Custom focus ring (accessibility) ---- */
+:focus-visible {
+  outline: 2px solid var(--color-frost);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+/* ---- Scrollbar ---- */
+::-webkit-scrollbar {
+  width: 9px;
+}
+::-webkit-scrollbar-track {
+  background: var(--color-void);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--color-steel);
+  border-radius: 99px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-flame);
+}
+
+/* ============================================================
+   Utility layer
+   ============================================================ */
+@layer utilities {
+  .font-display {
+    font-family: var(--font-display);
+  }
+
+  .text-gradient {
+    background: var(--gradient-signature);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+  .text-gradient-fire {
+    background: var(--gradient-fire);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+  .text-gradient-frost {
+    background: var(--gradient-frost);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+
+  /* Frosted glass surface */
+  .glass {
+    background: color-mix(in oklab, var(--color-pure) 5%, transparent);
+    backdrop-filter: blur(20px) saturate(140%);
+    -webkit-backdrop-filter: blur(20px) saturate(140%);
+    border: 1px solid color-mix(in oklab, var(--color-pure) 10%, transparent);
+  }
+
+  /* Outline (stroke-only) typography */
+  .text-outline {
+    color: transparent;
+    -webkit-text-stroke: 1px
+      color-mix(in oklab, var(--color-platinum) 22%, transparent);
+  }
+
+  .grid-noise {
+    background-image: radial-gradient(
+      color-mix(in oklab, var(--color-pure) 6%, transparent) 1px,
+      transparent 1px
+    );
+    background-size: 22px 22px;
+  }
+
+  /* Animated gradient border wrapper */
+  .gradient-border {
+    position: relative;
+    isolation: isolate;
+  }
+  .gradient-border::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    padding: 1px;
+    border-radius: inherit;
+    background: var(--gradient-signature);
+    -webkit-mask:
+      linear-gradient(#fff 0 0) content-box,
+      linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    opacity: 0;
+    transition: opacity 0.4s var(--ease-out-expo);
+  }
+  .gradient-border:hover::before {
+    opacity: 1;
+  }
+}
+
+/* ============================================================
+   Keyframes
+   ============================================================ */
+@keyframes float-pulse {
+  0%,
+  100% {
+    box-shadow: 0 0 0 0 color-mix(in oklab, #25d366 55%, transparent);
+  }
+  70% {
+    box-shadow: 0 0 0 18px transparent;
+  }
+}
+@keyframes wa-shake {
+  0%,
+  92%,
+  100% {
+    transform: rotate(0deg);
+  }
+  94% {
+    transform: rotate(-9deg);
+  }
+  96% {
+    transform: rotate(8deg);
+  }
+  98% {
+    transform: rotate(-5deg);
+  }
+}
+@keyframes ping-dot {
+  0% {
+    transform: scale(1);
+    opacity: 0.7;
+  }
+  80%,
+  100% {
+    transform: scale(2.4);
+    opacity: 0;
+  }
+}
+@keyframes marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+@keyframes scroll-hint {
+  0% {
+    transform: translateY(0);
+    opacity: 0;
+  }
+  40% {
+    opacity: 1;
+  }
+  80%,
+  100% {
+    transform: translateY(14px);
+    opacity: 0;
+  }
+}
+
+.animate-marquee {
+  animation: marquee var(--marquee-duration, 40s) linear infinite;
+}
+
+/* Leaflet dark theme tweaks */
+.leaflet-container {
+  background: var(--color-carbon) !important;
+  font-family: var(--font-sans);
+}
+.leaflet-tile {
+  filter: invert(1) hue-rotate(190deg) brightness(0.95) contrast(0.9);
+}
+.leaflet-control-attribution {
+  background: rgba(10, 10, 15, 0.6) !important;
+  color: #71717a !important;
+}
+.leaflet-control-attribution a {
+  color: #a1a1aa !important;
+}
+
+/* ============================================================
+   Reduced motion — disable heavy choreography
+   ============================================================ */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+  .animate-marquee {
+    animation: none !important;
+  }
+}
