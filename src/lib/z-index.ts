@@ -5,6 +5,7 @@
  * jamais une valeur magique inline.
  *
  *  9999  CURSOR     Curseur custom (desktop, pointer-events-none, toujours au-dessus)
+ *   200  SUSPENDED  Écran de suspension plein écran (recouvre toute la nav)
  *   100  SKIP_LINK  Lien d'évitement clavier (visible au focus uniquement)
  *    90  LIGHTBOX   Modale galerie réalisations
  *    80  MENU       Menu mobile plein écran (au-dessus du header)
@@ -23,6 +24,7 @@ export const Z = {
   menu: 80,
   lightbox: 90,
   skipLink: 100,
+  suspended: 200,
   cursor: 9999,
 } as const;
 
