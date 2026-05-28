@@ -1,8 +1,11 @@
 import type { Metadata } from "next";
 
 import { SITE } from "@/lib/content";
-import { PHONE_DISPLAY, PHONE_TEL, WHATSAPP_NUMBER } from "@/lib/whatsapp";
 import { Z } from "@/lib/z-index";
+
+const CONTACT_TEL = "+213540281551";
+const CONTACT_DISPLAY = "+213 540 28 15 51";
+const CONTACT_WHATSAPP = "213540281551";
 
 export const metadata: Metadata = {
   title: "Site temporairement indisponible",
@@ -18,7 +21,7 @@ export default function SuspendedPage() {
     >
       <div className="flex max-w-xl flex-col items-center gap-6">
         <span className="font-mono text-xs uppercase tracking-[0.3em] text-flame">
-          {SITE.name}
+          Développé par CodexAI
         </span>
 
         <h1 className="font-display text-4xl font-bold leading-tight sm:text-5xl">
@@ -32,13 +35,13 @@ export default function SuspendedPage() {
 
         <div className="mt-2 flex flex-col items-center gap-3 sm:flex-row">
           <a
-            href={`tel:${PHONE_TEL}`}
+            href={`tel:${CONTACT_TEL}`}
             className="rounded-full bg-flame px-7 py-3 font-medium text-void transition hover:opacity-90"
           >
-            Appeler le {PHONE_DISPLAY}
+            Appeler le {CONTACT_DISPLAY}
           </a>
           <a
-            href={`https://wa.me/${WHATSAPP_NUMBER}`}
+            href={`https://wa.me/${CONTACT_WHATSAPP}`}
             target="_blank"
             rel="noopener noreferrer"
             className="rounded-full border border-platinum/20 px-7 py-3 font-medium text-platinum transition hover:bg-platinum/10"
